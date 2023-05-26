@@ -7,11 +7,11 @@ contract("Whitelist", async function () {
 	before(async () => {
 		[owner, user1, user2, lzEndpoint] = await ethers.getSigners();
 		// ------------- Deployment of contracts -------------
-		Sweep = await ethers.getContractFactory("SWEEP");
-		sweep = await Sweep.deploy();
+		DefireadyCoin = await ethers.getContractFactory("DefireadyCoin");
+		defireadyCoin = await DefireadyCoin.deploy();
 
 		Whitelist = await ethers.getContractFactory("Whitelist");
-		whitelist = await Whitelist.deploy(sweep.address);
+		whitelist = await Whitelist.deploy();
 	});
 
 	it('add user1 correctly', async () => {
@@ -31,8 +31,10 @@ contract("Whitelist", async function () {
 	});
 
 	it('revert calling setUserStatus() when caller is not owner', async () => {
-		await expect(whitelist.connect(user1).setUserStatus(user1.address, Const.USER_VALID))
-			.to.be.revertedWithCustomError(Whitelist, "NotMultisig");
+		await expectRevert(
+			whitelist.connect(user1).setUserStatus(user1.address, Const.USER_VALID),
+			"Ownable: caller is not the owner"
+		);
 	});
 
 	it('revert calling setUserStatus() when user is not existed', async () => {

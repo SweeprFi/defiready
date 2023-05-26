@@ -1,12 +1,12 @@
 {
-  "name": "sweep",
+  "name": "DefireadyCoin",
   "version": "1.0.0",
-  "description": "SWEEP Protocol V1 core smart contracts",
+  "description": "DefireadyCoin V1 core smart contracts",
   "main": "index.js",
   "scripts": {
     "test": "npm test"
   },
-  "author": "Sweep Team",
+  "author": "MaxOS Team",
   "license": "ISC",
   "devDependencies": {
     "@ethersproject/abi": "^5.7.0",

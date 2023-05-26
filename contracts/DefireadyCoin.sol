@@ -2,7 +2,7 @@
 pragma solidity 0.8.19;
 
 // ====================================================================
-// ======================= SWEEP Dollar Coin (SWEEP) ==================
+// ======================= DeFi-ready wholesale market token ==================
 // ====================================================================
 
 pragma solidity ^0.8.9;
@@ -11,7 +11,7 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "./TransferApprover/ITransferApprover.sol";
 
-contract SWEEP is ERC20, Ownable {
+contract DefireadyCoin is ERC20, Ownable {
     ITransferApprover private transferApprover;
 
     event ApproverSet(address indexed approver);
@@ -19,7 +19,7 @@ contract SWEEP is ERC20, Ownable {
     error ZeroAddressDetected();
     error TransferNotAllowed();
 
-    constructor() ERC20("SWEEP", "SWEEP") {}
+    constructor() ERC20("DefireadyCoin", "DFRTEST") {}
 
     /**
      * @notice Mint tokens

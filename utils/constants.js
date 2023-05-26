@@ -22,7 +22,7 @@ const wallets = {
 }
 
 const tokens = {
-  sweep: {
+  defireadyCoin: {
     1: '',
     5: '',
     42161: ''

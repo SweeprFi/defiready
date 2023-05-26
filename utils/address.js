@@ -14,7 +14,7 @@ const addresses = {
   owner: wallets.owner[chainId],
 
   // Tokens
-  sweep: tokens.sweep[chainId],
+  defireadyCoin: tokens.defireadyCoin[chainId],
 
   // Libraries
   whitelist: libraries.whitelist[chainId],

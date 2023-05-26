@@ -5,13 +5,13 @@ pragma solidity 0.8.19;
 // ======================= Whitelist ======================
 // ====================================================================
 
-import "../Common/Owned.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 
 /**
- * @title Sweep Whitelist
+ * @title Whitelist
  * @dev Hold a list of addresses that can be used in more than one transferApprover
  */
-contract Whitelist is Owned {
+contract Whitelist is Ownable {
     enum Status {
         INVALID,
         NEW,
@@ -30,7 +30,7 @@ contract Whitelist is Owned {
 
     /* ========== CONSTRUCTOR ========== */
 
-    constructor(address _sweep) Owned(_sweep) {}
+    constructor() {}
 
     /**
      * @dev Get User info
@@ -61,7 +61,7 @@ contract Whitelist is Owned {
      * @dev Set user's status
      * @param _account The address to set status
      */
-    function setUserStatus(address _account, Status _status) external onlyMultisig {
+    function setUserStatus(address _account, Status _status) external onlyOwner {
         require(users[_account].created_at > 0, "not exist");
 
         users[_account].status = _status;

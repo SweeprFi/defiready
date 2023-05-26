@@ -5,14 +5,14 @@ pragma solidity 0.8.19;
 // ======================= Transfer Approver ======================
 // ====================================================================
 
-import "../Common/Owned.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 import "./IWhitelist.sol";
 
 /**
- * @title Sweep Transfer Approver
+ * @title Transfer Approver
  * @dev Allows accounts to be blacklisted by admin role
  */
-contract TransferApprover is Owned {
+contract TransferApprover is Ownable {
     IWhitelist private whitelist;
 
     enum Validation {
@@ -29,7 +29,7 @@ contract TransferApprover is Owned {
 
     /* ========== CONSTRUCTOR ========== */
 
-    constructor(address _sweep, address _whitelist) Owned(_sweep) {
+    constructor(address _whitelist) {
         whitelist = IWhitelist(_whitelist);
         validation_method = Validation.ONLY_VALID;
     }
@@ -70,7 +70,7 @@ contract TransferApprover is Owned {
      * @dev Set time delay
      * @param _new_delay new time delay
      */
-    function setTimeDelay(uint256 _new_delay) external onlyMultisig {
+    function setTimeDelay(uint256 _new_delay) external onlyOwner {
         time_delay = _new_delay;
 
         emit SetTimeDelay(_new_delay);
@@ -80,7 +80,7 @@ contract TransferApprover is Owned {
      * @dev Set validation method
      * @param _new_method new validation method
      */
-    function setValidationType(Validation _new_method) external onlyMultisig {
+    function setValidationType(Validation _new_method) external onlyOwner {
         validation_method = _new_method;
 
         emit SetValidationType(_new_method);
