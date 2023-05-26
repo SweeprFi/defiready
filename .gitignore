@@ -1,0 +1,16 @@
+node_modules
+.idea
+
+#Hardhat files
+cache
+artifacts
+.openzeppelin
+
+.env
+
+
+*.DS_Store
+.env.goerli
+
+coverage.json
+coverage
