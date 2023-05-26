@@ -1,5 +1,5 @@
 # DeFi-ready securities
-EVM code for wallet credentials, and restricted tokens that require credentials.
+EVM code for wholesale-market wallet credentials and restricted tokens
 
 **DeFi-ready securities** are securities that circulate in an exempt market of non-US professionals. They can be handled by DeFi protocols that developers add to a whitelist
 
