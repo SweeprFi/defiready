@@ -2,7 +2,8 @@ const { ethers } = require("hardhat");
 const { network } = require("../utils/address");
 
 async function main() {
-	console.log(`Deploying contracts on ${network.name} with the account: ${await ethers.getSigners()}`);
+	[deployer] = await ethers.getSigners()
+	console.log(`Deploying contracts on ${network.name} with the account: ${deployer.address}`);
 
 	const nftInstance = await ethers.getContractFactory("DefireadyNFT");
 	const nftContract = await nftInstance.deploy();

@@ -35,9 +35,9 @@ contract("DefireadyNFT", async function () {
 
 		// Mint NFT
 		await defireadyNFT.connect(minter).mint(user.address, tokenURI);
-		tokenInfo__0 = await defireadyNFT.nfts(0);
+		expect(await defireadyNFT.ownerOf(0)).to.equal(user.address);
+		tokenInfo__0 = await defireadyNFT.credentials(0);
 		expect(tokenInfo__0.qualifier).to.equal(minter.address);
-		expect(tokenInfo__0.owner).to.equal(user.address);
 		expect(tokenInfo__0.isValid).to.equal(true);
 		expect(tokenInfo__0.time).to.be.above(0);
 		expect(tokenInfo__0.buyerType).to.equal(0);
@@ -60,13 +60,13 @@ contract("DefireadyNFT", async function () {
 		);
 
 		// Update NFT
-		tokenInfo__0 = await defireadyNFT.nfts(0);
+		tokenInfo__0 = await defireadyNFT.credentials(0);
 		expect(tokenInfo__0.isValid).to.equal(true);
 		expect(tokenInfo__0.buyerType).to.equal(0);
 
 		await defireadyNFT.connect(minter).update(0, false, 1);
 
-		tokenInfo__0 = await defireadyNFT.nfts(0);
+		tokenInfo__0 = await defireadyNFT.credentials(0);
 		expect(tokenInfo__0.isValid).to.equal(false);
 		expect(tokenInfo__0.buyerType).to.equal(1);
 	});
@@ -80,9 +80,9 @@ contract("DefireadyNFT", async function () {
 
 		// Burn NFT
 		await defireadyNFT.connect(minter).burn(0);
-		tokenInfo__0 = await defireadyNFT.nfts(0);
+		tokenInfo__0 = await defireadyNFT.credentials(0);
 		expect(tokenInfo__0.qualifier).to.equal(ZERO_ADDRESS);
-		expect(tokenInfo__0.owner).to.equal(ZERO_ADDRESS);
+		expect(await defireadyNFT.balanceOf(minter.address)).to.equal(0);
 	});
 
 	it('Remove a minter', async () => {

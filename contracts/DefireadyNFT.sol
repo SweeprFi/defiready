@@ -17,20 +17,19 @@ contract DefireadyNFT is ERC721URIStorage, ERC721Enumerable, Ownable {
         VIEWER
     }
 
-    struct Info {
+    struct Credential {
         address qualifier;
-        address owner;
         bool isValid;
         uint256 time;
         BuyerType buyerType;
     }
 
     mapping(address => bool) private minters;
-    mapping(uint256 => Info) public nfts;
+    mapping(uint256 => Credential) public credentials;
 
     /* ========== Events ========== */
 
-    event Mint(uint256 indexed tokenId, Info info);
+    event Mint(uint256 indexed tokenId, Credential info);
     event Update(uint256 indexed tokenId, bool isValid, BuyerType _buyerType);
     event Burn(uint256 indexed tokenId);
 
@@ -90,15 +89,14 @@ contract DefireadyNFT is ERC721URIStorage, ERC721Enumerable, Ownable {
         _safeMint(_to, tokenId);
         _setTokenURI(tokenId, _tokenURI);
 
-        Info memory info = Info({
+        Credential memory info = Credential({
             qualifier: msg.sender,
-            owner: _to,
             isValid: true,
             time: block.timestamp,
             buyerType: BuyerType.BUYER
         });
 
-        nfts[tokenId] = info;
+        credentials[tokenId] = info;
 
         emit Mint(tokenId, info);
     }
@@ -116,7 +114,7 @@ contract DefireadyNFT is ERC721URIStorage, ERC721Enumerable, Ownable {
         BuyerType _buyerType
     ) external onlyMinter {
         require(_exists(_tokenId), "Non-exist");
-        Info storage info = nfts[_tokenId];
+        Credential storage info = credentials[_tokenId];
         info.isValid = _isValid;
         info.buyerType = _buyerType;
         info.time = block.timestamp;
@@ -132,7 +130,7 @@ contract DefireadyNFT is ERC721URIStorage, ERC721Enumerable, Ownable {
     function burn(uint256 _tokenId) external onlyMinter {
         require(_exists(_tokenId), "Non-exist");
         _burn(_tokenId);
-        delete nfts[_tokenId];
+        delete credentials[_tokenId];
 
         emit Burn(_tokenId);
     }
