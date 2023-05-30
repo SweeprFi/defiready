@@ -26,10 +26,10 @@ module.exports = {
 	networks: {
 		hardhat: {
 			forking: {
-				// url: "https://eth-goerli.alchemyapi.io/v2/"  + process.env.ALCHEMY_KEY, // Goerli
+				url: "https://eth-goerli.alchemyapi.io/v2/"  + process.env.ALCHEMY_KEY, // Goerli
 				// url: "https://eth-mainnet.alchemyapi.io/v2/"  + process.env.ALCHEMY_KEY, // Mainnet
 				// url: "https://arb-goerli.g.alchemy.com/v2/" + process.env.ALCHEMY_KEY, // Goerli-Arbitrum
-				url: "https://arb-mainnet.g.alchemy.com/v2/" + process.env.ALCHEMY_KEY, // Arbitrum-Mainnet
+				// url: "https://arb-mainnet.g.alchemy.com/v2/" + process.env.ALCHEMY_KEY, // Arbitrum-Mainnet
 				// blockNumber: 20005467
 			}
 		},
@@ -63,8 +63,8 @@ module.exports = {
 		},
 	},
 	etherscan: {
-		// apiKey: process.env.ETHERSCAN_API_KEY, // Goerli
-		apiKey: process.env.ARBISCAN_API_KEY, // Arbitrum
+		apiKey: process.env.ETHERSCAN_API_KEY, // Goerli
+		// apiKey: process.env.ARBISCAN_API_KEY, // Arbitrum
 	},
 	gasReporter: {
 		enabled: (process.env.REPORT_GAS) ? true : false,
