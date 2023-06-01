@@ -66,8 +66,8 @@ const uniswap = {
   },
   pool: {
     1: '',
-    5: '0xde5789B9690298C8D7418CC6eCE24f6EBce55aC2',
-    42161: '0xF75F92BF819FcBA96209990aE040DABd9Fd1c067',
+    5: '',
+    42161: '',
   },
   quoter: {
     1: '0xb27308f9F90D607463bb33eA1BeBb41C27CE5AB6',
