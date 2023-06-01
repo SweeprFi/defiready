@@ -15,6 +15,10 @@ contract("Whitelist", async function () {
 	});
 
 	it('add user1 correctly', async () => {
+		await expectRevert(
+			whitelist.connect(user1).addUser(user2.address),
+			"Ownable: caller is not the owner"
+		);
 		await whitelist.addUser(user1.address);
 
 		user = await whitelist.getUser(user1.address);

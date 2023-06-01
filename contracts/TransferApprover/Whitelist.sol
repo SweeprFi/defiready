@@ -26,7 +26,7 @@ contract Whitelist is Ownable {
     mapping(address => User) public users;
 
     event AddedUser(address indexed _account);
-    event UpdatedStatus(address indexed _account);
+    event UpdatedStatus(address indexed _account, Status _status);
 
     /* ========== CONSTRUCTOR ========== */
 
@@ -36,7 +36,9 @@ contract Whitelist is Ownable {
      * @dev Get User info
      * @param _account The address to check
      */
-    function getUser(address _account) external view returns (Status status, uint256 created_at) {
+    function getUser(
+        address _account
+    ) external view returns (Status status, uint256 created_at) {
         status = users[_account].status;
         created_at = users[_account].created_at;
     }
@@ -45,15 +47,11 @@ contract Whitelist is Ownable {
      * @dev Adds account
      * @param _account The address to add
      */
-    function addUser(address _account) external {
+    function addUser(address _account) external onlyOwner {
         require(users[_account].created_at == 0, "already added");
-
-        User memory user = User(
-            Status.NEW,
-            block.timestamp
-        );
-
+        User memory user = User(Status.NEW, block.timestamp);
         users[_account] = user;
+
         emit AddedUser(_account);
     }
 
@@ -61,10 +59,13 @@ contract Whitelist is Ownable {
      * @dev Set user's status
      * @param _account The address to set status
      */
-    function setUserStatus(address _account, Status _status) external onlyOwner {
+    function setUserStatus(
+        address _account,
+        Status _status
+    ) external onlyOwner {
         require(users[_account].created_at > 0, "not exist");
-
         users[_account].status = _status;
-        emit UpdatedStatus(_account);
+
+        emit UpdatedStatus(_account, _status);
     }
 }
