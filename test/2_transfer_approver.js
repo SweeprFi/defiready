@@ -76,7 +76,7 @@ contract("TransferApprover", async function () {
 		expect(await defireadyCoin.balanceOf(user2.address)).to.equal(user2_balance.add(TRANSFER_AMOUNT));
 	});
 	
-	it('Transfer allowed for NEW users.', async () => {
+	it('Transfer allowed for NEW users with no TimeDelay.', async () => {
 		// Check validation status.
 		await transferApprover.setValidationType(Const.VALID_OR_NEW);
 		expect(await transferApprover.validation_method()).to.equal(Const.VALID_OR_NEW);
@@ -99,13 +99,20 @@ contract("TransferApprover", async function () {
 		await transferApprover.setTimeDelay(TIME_DELAY);
 		expect(await transferApprover.time_delay()).to.equal(TIME_DELAY);
 
+		// Transfer from VALID User to New User.
+		await expect(defireadyCoin.connect(user1).transfer(user3.address, TRANSFER_AMOUNT))
+			.to.be.revertedWithCustomError(DefireadyCoin, 'TransferNotAllowed');
+		
 		// Delay 70 mins
 		await time.increase(parseInt(700));
 		await time.advanceBlock();
 
 		// Transfer from VALID User to New User.
-		await expect(defireadyCoin.connect(user1).transfer(user3.address, TRANSFER_AMOUNT))
-			.to.be.revertedWithCustomError(DefireadyCoin, 'TransferNotAllowed');
+		user1_balance = await defireadyCoin.balanceOf(user1.address);
+		user3_balance = await defireadyCoin.balanceOf(user3.address);
+		await defireadyCoin.connect(user1).transfer(user3.address, TRANSFER_AMOUNT);
+		expect(await defireadyCoin.balanceOf(user1.address)).to.equal(user1_balance.sub(TRANSFER_AMOUNT));
+		expect(await defireadyCoin.balanceOf(user3.address)).to.equal(user3_balance.add(TRANSFER_AMOUNT));
 	});
 
 	it('Check transferable with Invalid User.', async () => {

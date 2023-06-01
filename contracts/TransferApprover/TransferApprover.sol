@@ -67,9 +67,7 @@ contract TransferApprover is Ownable {
             validation_method == Validation.VALID_OR_NEW
         ) {
             return
-                time_delay == 0
-                    ? true
-                    : (block.timestamp - created_at <= time_delay)
+                time_delay == 0 || (block.timestamp - created_at > time_delay)
                     ? true
                     : false;
         } else {
