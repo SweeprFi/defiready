@@ -63,8 +63,8 @@ module.exports = {
 		},
 	},
 	etherscan: {
-		// apiKey: process.env.ETHERSCAN_API_KEY, // Goerli
-		apiKey: process.env.ARBISCAN_API_KEY, // Arbitrum
+		apiKey: process.env.ETHERSCAN_API_KEY, // Goerli
+		// apiKey: process.env.ARBISCAN_API_KEY, // Arbitrum
 	},
 	gasReporter: {
 		enabled: (process.env.REPORT_GAS) ? true : false,

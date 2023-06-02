@@ -32,12 +32,12 @@ const tokens = {
 const libraries = {
   whitelist: {
     1: '',
-    5: '',
+    5: '0x3C3c5E4E2d1B1B1CBcA85C09602589BC658a69c4',
     42161: ''
   },
   approver: {
     1: '',
-    5: '',
+    5: '0x31842cF3Ec518Dee578d5b3EbC4D97216344B0e9',
     42161: ''
   }
 }
@@ -66,7 +66,7 @@ const uniswap = {
   },
   pool: {
     1: '',
-    5: '',
+    5: '0xde5789B9690298C8D7418CC6eCE24f6EBce55aC2',
     42161: '',
   },
   quoter: {
