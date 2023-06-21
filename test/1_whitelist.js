@@ -1,7 +1,7 @@
 const { expect } = require("chai");
 const { expectRevert } = require('@openzeppelin/test-helpers');
 const { ethers } = require("hardhat");
-const { Const } = require("../utils/helper_functions");
+const { Const } = require("../utils/helper");
 
 contract("Whitelist", async function () {
 	before(async () => {

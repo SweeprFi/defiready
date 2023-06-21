@@ -2,15 +2,16 @@ const { expect } = require("chai");
 const { ethers } = require("hardhat");
 const { expectRevert } = require('@openzeppelin/test-helpers');
 const { ZERO_ADDRESS } = require("@openzeppelin/test-helpers/src/constants");
+const { addresses } = require("../utils/data");
 
 contract("DefireadyNFT", async function () {
 	before(async () => {
 		[owner, minter, user, guest] = await ethers.getSigners();
 		tokenURI = 'https://opensea.io/';
-		
+
 		// ------------- Deployment of contracts -------------
 		DefireadyNFT = await ethers.getContractFactory("DefireadyNFT");
-		defireadyNFT = await DefireadyNFT.connect(owner).deploy();
+		defireadyNFT = await DefireadyNFT.connect(owner).deploy(addresses.layerZeroEndpoint);
 	});
 
 	it('Add a minter', async () => {
@@ -42,6 +43,15 @@ contract("DefireadyNFT", async function () {
 		expect(tokenInfo__0.time).to.be.above(0);
 		expect(tokenInfo__0.buyerType).to.equal(0);
 		expect(await defireadyNFT.tokenURI(0)).to.equal(tokenURI);
+
+		// Check to mint more NFT for same user
+		await expectRevert(
+			defireadyNFT.connect(minter).mint(user.address, tokenURI),
+			"Already minted"
+		);
+		const adapterParam = ethers.utils.solidityPack(["uint16", "uint256"], [1, 225000])
+		console.log(adapterParam)
+		// console.log(await defireadyNFT.getGasLimit('0x00010000000000000000000000000000000000000000000000000000000000225510'))
 	});
 
 	it('Check transferable', async () => {
@@ -102,5 +112,4 @@ contract("DefireadyNFT", async function () {
 		await defireadyNFT.connect(owner).removeMinter(minter.address);
 		expect(await defireadyNFT.isMinter(minter.address)).to.equal(false);
 	});
-
 });
