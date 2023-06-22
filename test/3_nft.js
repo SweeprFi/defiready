@@ -49,9 +49,6 @@ contract("DefireadyNFT", async function () {
 			defireadyNFT.connect(minter).mint(user.address, tokenURI),
 			"Already minted"
 		);
-		const adapterParam = ethers.utils.solidityPack(["uint16", "uint256"], [1, 225000])
-		console.log(adapterParam)
-		// console.log(await defireadyNFT.getGasLimit('0x00010000000000000000000000000000000000000000000000000000000000225510'))
 	});
 
 	it('Check transferable', async () => {
