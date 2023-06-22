@@ -40,11 +40,10 @@ contract TransferApprover is Ownable {
      * @param _to beneficiary address
      * @return (bool) true - allowance, false - denial
      */
-    function checkTransfer(address _from, address _to)
-        external
-        view
-        returns (bool)
-    {
+    function checkTransfer(
+        address _from,
+        address _to
+    ) external view returns (bool) {
         if (_from == address(0) || _to == address(0)) return true;
 
         return (isValid(_from) && isValid(_to)) ? true : false;
@@ -55,12 +54,22 @@ contract TransferApprover is Ownable {
      * @param _account The address to check
      */
     function isValid(address _account) public view returns (bool) {
-        (IWhitelist.Status status, uint256 created_at) = whitelist.getUser(_account);
+        (IWhitelist.Status status, uint256 created_at) = whitelist.getUser(
+            _account
+        );
+
+        if (created_at == 0) return false; // Non-WhiteList User
 
         if (status == IWhitelist.Status.VALID) {
             return true;
-        } else if (status == IWhitelist.Status.NEW && validation_method == Validation.VALID_OR_NEW && time_delay > 0) {
-            return (block.timestamp - created_at > time_delay) ? true : false;
+        } else if (
+            status == IWhitelist.Status.NEW &&
+            validation_method == Validation.VALID_OR_NEW
+        ) {
+            return
+                time_delay == 0 || (block.timestamp - created_at > time_delay)
+                    ? true
+                    : false;
         } else {
             return false;
         }
