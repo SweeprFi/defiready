@@ -1,7 +1,7 @@
 const { expect } = require("chai");
 const { ethers } = require("hardhat");
 const { time } = require('@openzeppelin/test-helpers');
-const { toBN, Const } = require("../utils/helper_functions");
+const { toBN, Const } = require("../utils/helper");
 
 contract("TransferApprover", async function () {
 	before(async () => {

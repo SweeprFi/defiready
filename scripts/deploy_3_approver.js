@@ -1,5 +1,5 @@
 const { ethers } = require("hardhat");
-const { addresses, network } = require("../utils/address");
+const { addresses, network } = require("../utils/data");
 
 async function main() {
 	let deployer = '';
