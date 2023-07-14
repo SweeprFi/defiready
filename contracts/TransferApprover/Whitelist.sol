@@ -20,7 +20,7 @@ contract Whitelist is Ownable {
 
     struct User {
         Status status;
-        uint256 created_at;
+        uint256 createdDt;
     }
 
     mapping(address => User) public users;
@@ -38,9 +38,9 @@ contract Whitelist is Ownable {
      */
     function getUser(
         address _account
-    ) external view returns (Status status, uint256 created_at) {
+    ) external view returns (Status status, uint256 createdDt) {
         status = users[_account].status;
-        created_at = users[_account].created_at;
+        createdDt = users[_account].createdDt;
     }
 
     /**
@@ -48,7 +48,7 @@ contract Whitelist is Ownable {
      * @param _account The address to add
      */
     function addUser(address _account) external {
-        require(users[_account].created_at == 0, "already added");
+        require(users[_account].createdDt == 0, "already added");
         User memory user = User(Status.NEW, block.timestamp);
         users[_account] = user;
 
@@ -64,7 +64,7 @@ contract Whitelist is Ownable {
         address _account,
         Status _status
     ) external onlyOwner {
-        require(users[_account].created_at > 0, "not exist");
+        require(users[_account].createdDt > 0, "not exist");
         users[_account].status = _status;
 
         emit UpdatedStatus(_account, _status);

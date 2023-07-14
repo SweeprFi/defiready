@@ -58,7 +58,7 @@ contract("TransferApprover", async function () {
 
 	it('Transfer allowed only for VALID users.', async () => {
 		// Check validation status.
-		expect(await transferApprover.validation_method()).to.equal(Const.ONLY_VALID);
+		expect(await transferApprover.validationType()).to.equal(Const.ONLY_VALID);
 
 		// Transfer from VALID User to New User.
 		await expect(defireadyCoin.connect(user1).transfer(user3.address, TRANSFER_AMOUNT))
@@ -79,7 +79,7 @@ contract("TransferApprover", async function () {
 	it('Transfer allowed for NEW users with no TimeDelay.', async () => {
 		// Check validation status.
 		await transferApprover.setValidationType(Const.VALID_OR_NEW);
-		expect(await transferApprover.validation_method()).to.equal(Const.VALID_OR_NEW);
+		expect(await transferApprover.validationType()).to.equal(Const.VALID_OR_NEW);
 				
 		// Transfer from New User to Non-WhiteList User.
 		await expect(defireadyCoin.connect(user3).transfer(user4.address, TRANSFER_AMOUNT))
@@ -95,9 +95,9 @@ contract("TransferApprover", async function () {
 
 	it('Transfer allowed for NEW users with TimeDelay.', async () => {
 		// Check TimeDelay.
-		expect(await transferApprover.time_delay()).to.equal(Const.ZERO);
+		expect(await transferApprover.timeDelay()).to.equal(Const.ZERO);
 		await transferApprover.setTimeDelay(TIME_DELAY);
-		expect(await transferApprover.time_delay()).to.equal(TIME_DELAY);
+		expect(await transferApprover.timeDelay()).to.equal(TIME_DELAY);
 
 		// Transfer from VALID User to New User.
 		await expect(defireadyCoin.connect(user1).transfer(user3.address, TRANSFER_AMOUNT))
