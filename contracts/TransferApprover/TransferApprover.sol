@@ -5,14 +5,15 @@ pragma solidity 0.8.19;
 // ======================= Transfer Approver ======================
 // ====================================================================
 
-import "@openzeppelin/contracts/access/Ownable.sol";
+import "./ITransferApprover.sol";
 import "./IWhitelist.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 
 /**
  * @title Transfer Approver
  * @dev Allows accounts to be blacklisted by admin role
  */
-contract TransferApprover is Ownable {
+contract TransferApprover is Ownable, ITransferApprover {
     IWhitelist private whitelist;
 
     enum Validation {
@@ -42,8 +43,9 @@ contract TransferApprover is Ownable {
      */
     function checkTransfer(
         address _from,
-        address _to
-    ) external view returns (bool) {
+        address _to,
+        uint256
+    ) external view override returns (bool) {
         if (_from == address(0) || _to == address(0)) return true;
 
         return (isValid(_from) && isValid(_to)) ? true : false;
