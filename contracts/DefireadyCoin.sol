@@ -54,7 +54,7 @@ contract DefireadyCoin is ERC20, Ownable {
     ) internal override {
         if (
             address(transferApprover) != address(0) &&
-            !transferApprover.checkTransfer(_from, _to)
+            !transferApprover.checkTransfer(_from, _to, 0)
         ) revert TransferNotAllowed();
 
         super._beforeTokenTransfer(_from, _to, _amount);
