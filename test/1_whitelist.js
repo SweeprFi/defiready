@@ -20,7 +20,7 @@ contract("Whitelist", async function () {
 		user = await whitelist.getUser(user1.address);
 
 		expect(user.status).to.equal(Const.USER_NEW);
-		expect(user.created_at).to.above(0);
+		expect(user.createdDt).to.above(0);
 	});
 
 	it('revert calling addUser() when user1 is already added', async () => {
