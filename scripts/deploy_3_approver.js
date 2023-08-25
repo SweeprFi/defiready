@@ -2,15 +2,9 @@ const { ethers } = require("hardhat");
 const { addresses, network } = require("../utils/address");
 
 async function main() {
-	let deployer = '';
-	const whitelist = addresses.whitelist;
-
-	if (network.type === "0") { // local
-		[deployer] = await ethers.getSigners();
-		deployer = deployer.address;
-	} else {
-		deployer = addresses.owner;
-	}
+	[deployer] = await ethers.getSigners();
+	deployer = deployer.address;
+	whitelist = addresses.whitelist;
 
 	console.log(`Deploying contracts on ${network.name} with the account: ${deployer}`);
 

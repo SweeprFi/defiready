@@ -33,12 +33,12 @@ const libraries = {
   whitelist: {
     1: '',
     5: '0x3C3c5E4E2d1B1B1CBcA85C09602589BC658a69c4',
-    42161: ''
+    42161: '0xFB66e1922675c8Cc53F7Da7143DA7d4172E0A9f6',
   },
   approver: {
     1: '',
     5: '0x31842cF3Ec518Dee578d5b3EbC4D97216344B0e9',
-    42161: ''
+    42161: '0x06d94665f02322781303224120326167483F5BD2',
   }
 }
 
